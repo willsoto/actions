@@ -13,6 +13,10 @@ on:
         required: false
         # https://github.community/t/github-actions-bot-email-address/17204/5
         default: "41898282+github-actions[bot]@users.noreply.github.com"
+      releaseEnabled:
+        type: boolean
+        required: false
+        default: true
     secrets:
       GitHubToken:
         required: true
@@ -34,7 +38,7 @@ jobs:
       - run: npm run test:coverage
       - run: npm run build
   release:
-    if: "github.ref == 'refs/heads/main'"
+    if: "${{ inputs.releaseEnabled }} && github.ref == 'refs/heads/main'"
     runs-on: ubuntu-latest
     needs:
       - "test"
