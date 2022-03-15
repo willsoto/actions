@@ -40,7 +40,7 @@ jobs:
   release:
     # See this issue for the string value
     # https://github.com/actions/runner/issues/1483
-    if: "${{ inputs.releaseEnabled == 'true' }} && github.ref == 'refs/heads/main'"
+    if: ${{ inputs.releaseEnabled == 'true' }} && "github.ref == 'refs/heads/main'"
     runs-on: ubuntu-latest
     needs:
       - "test"
