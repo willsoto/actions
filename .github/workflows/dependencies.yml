@@ -1,0 +1,27 @@
+name: dependencies
+
+on:
+  # allows for manual testing via UI or CLI
+  # `gh workflow run dependencies`
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 0 * * 0" # once a week at 00:00 on Sunday
+
+jobs:
+  ncu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+      - run: "npm ci"
+      - run: "npm run upgrade-deps"
+      # This will only run if everything above passes
+      - name: "Create Pull Request"
+        uses: peter-evans/create-pull-request@v3
+        with:
+          add-paths: "package.json,package-lock.json"
+          branch: "automated/dependencies"
+          delete-branch: true
+          title: "[automated]: update dependencies"
+          assignees: "wsoto"
+          commit-message: "chore: upgrade dependencies"
