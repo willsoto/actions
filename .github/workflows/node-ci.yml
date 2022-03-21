@@ -7,12 +7,13 @@ on:
       gitAuthorName:
         type: string
         required: false
-        default: "GitHub Actions"
+        default: "GitHub"
       gitAuthorEmail:
         type: string
         required: false
-        # https://github.community/t/github-actions-bot-email-address/17204/5
-        default: "41898282+github-actions[bot]@users.noreply.github.com"
+        # Got the email from here:
+        # https://github.com/actions/checkout#push-a-commit-using-the-built-in-token
+        default: "github-actions@github.com"
       releaseEnabled:
         type: boolean
         required: false
