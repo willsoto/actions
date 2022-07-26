@@ -54,7 +54,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - run: "pnpm install --frozen-lockfile --ignore-scripts"
+      - run: "pnpm install --frozen-lockfile"
       - run: "pnpm run typecheck"
       - run: "pnpm run lint"
       - run: "pnpm run test:coverage"
