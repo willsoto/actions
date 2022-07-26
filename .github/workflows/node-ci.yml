@@ -70,6 +70,12 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: volta-cli/action@v1
+      - uses: pnpm/action-setup@v2.2.2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
       - run: "pnpm install --frozen-lockfile --ignore-scripts"
       - run: "pnpm run release"
         env:
