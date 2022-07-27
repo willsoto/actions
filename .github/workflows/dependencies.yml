@@ -19,7 +19,7 @@ jobs:
       - run: "npm run upgrade-deps"
       # This will only run if everything above passes
       - name: "Create Pull Request"
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           add-paths: "package.json,package-lock.json"
           branch: "automated/dependencies"
