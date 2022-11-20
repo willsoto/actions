@@ -18,6 +18,10 @@ on:
         type: boolean
         required: false
         default: true
+      cacheEnabled:
+        type: boolean
+        required: false
+        default: true
     secrets:
       GitHubToken:
         required: true
@@ -41,12 +45,14 @@ jobs:
           run_install: false
 
       - name: Get pnpm store directory
+        if: inputs.cacheEnabled
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
+        if: inputs.cacheEnabled
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
