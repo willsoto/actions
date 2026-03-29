@@ -13,4 +13,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: rhysd/actionlint@v1
+      - run: "go install github.com/rhysd/actionlint/cmd/actionlint@latest"
+      - run: "actionlint -color"
