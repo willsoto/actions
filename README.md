@@ -56,6 +56,13 @@ Automates releases using [release-please](https://github.com/googleapis/release-
 **Prerequisites:**
 
 - A `RELEASE_TOKEN` repository secret containing a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with `contents:write` and `pull-requests:write` scopes. A PAT is required (instead of the default `GITHUB_TOKEN`) so that merging release PRs triggers downstream workflows.
+- An `NPM_TOKEN` repository secret containing an [npm access token](https://docs.npmjs.com/creating-and-viewing-access-tokens) for publishing packages (required if `publishEnabled` is `true`).
+
+**Inputs:**
+
+| Name             | Type    | Default | Description               |
+| ---------------- | ------- | ------- | ------------------------- |
+| `publishEnabled` | boolean | `true`  | Toggle npm publish step   |
 
 **Usage:**
 
@@ -71,6 +78,19 @@ on:
 jobs:
   release:
     uses: willsoto/actions/.github/workflows/node-release.yml@main
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+**Example without npm publish:**
+
+```yaml
+jobs:
+  release:
+    uses: willsoto/actions/.github/workflows/node-release.yml@main
+    with:
+      publishEnabled: false
     secrets:
       RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 ```
