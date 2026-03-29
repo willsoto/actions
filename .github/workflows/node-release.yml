@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: asdf-vm/actions/install@v4
-      - run: "corepack enable"
+      - uses: pnpm/action-setup@v5
       - run: "pnpm install --frozen-lockfile"
       - run: "pnpm run build"
       - run: "pnpm publish --no-git-checks"
