@@ -36,8 +36,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v7
-      - uses: asdf-vm/actions/install@v4
       - uses: pnpm/action-setup@v6
+      - uses: asdf-vm/actions/install@v4
       - run: "pnpm install --frozen-lockfile"
       - run: "pnpm run build"
       - run: "pnpm publish --no-git-checks"
