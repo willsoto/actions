@@ -56,7 +56,9 @@ Automates releases using [release-please](https://github.com/googleapis/release-
 **Prerequisites:**
 
 - A `RELEASE_TOKEN` repository secret containing a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with `contents:write` and `pull-requests:write` scopes. A PAT is required (instead of the default `GITHUB_TOKEN`) so that merging release PRs triggers downstream workflows.
-- An `NPM_TOKEN` repository secret containing an [npm access token](https://docs.npmjs.com/creating-and-viewing-access-tokens) for publishing packages (required if `publishEnabled` is `true`).
+- If `publishEnabled` is `true`, a [trusted publisher](https://docs.npmjs.com/trusted-publishers) configured on npmjs.com for the package. Use GitHub Actions as the provider and enter the **calling** workflow's filename (e.g. `node-release.yml` in the consuming repository), since npm validates the caller rather than this reusable workflow. No npm token is needed.
+- The calling job must grant `id-token: write` (alongside `contents: write` and `pull-requests: write`); a reusable workflow cannot be granted more permissions than its caller.
+- Node 22.14.0 or later in the consuming repository's `.tool-versions`, which ships an npm that supports trusted publishing (11.5.1+).
 
 **Inputs:**
 
@@ -78,9 +80,12 @@ on:
 jobs:
   release:
     uses: willsoto/actions/.github/workflows/node-release.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     secrets:
       RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
 
 **Example without npm publish:**
